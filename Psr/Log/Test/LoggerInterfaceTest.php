@@ -15,7 +15,7 @@ abstract class LoggerInterfaceTest extends \PHPUnit_Framework_TestCase
     /**
      * @return LoggerInterface
      */
-    abstract function getLogger();
+    abstract function getLogger() : LoggerInterface;
 
     /**
      * This must return the log messages in order with a simple formatting: "<LOG LEVEL> <MESSAGE>"
@@ -24,7 +24,7 @@ abstract class LoggerInterfaceTest extends \PHPUnit_Framework_TestCase
      *
      * @return string[]
      */
-    abstract function getLogs();
+    abstract function getLogs() : array;
 
     public function testImplements()
     {
@@ -34,7 +34,7 @@ abstract class LoggerInterfaceTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideLevelsAndMessages
      */
-    public function testLogsAtAllLevels($level, $message)
+    public function testLogsAtAllLevels(string $level, string $message)
     {
         $logger = $this->getLogger();
         $logger->{$level}($message, array('user' => 'Bob'));
@@ -47,7 +47,7 @@ abstract class LoggerInterfaceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->getLogs());
     }
 
-    public function provideLevelsAndMessages()
+    public function provideLevelsAndMessages() : array
     {
         return array(
             LogLevel::EMERGENCY => array(LogLevel::EMERGENCY, 'message of level emergency with context: {user}'),
